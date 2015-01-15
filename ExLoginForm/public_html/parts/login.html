@@ -21,15 +21,15 @@
         <div class="main-signin__middle">
             <div class="middle__form">
                 <form name="myForm" novalidate>
-                    <input type="text" placeholder="Логин" required>
-                    <input type="email" placeholder="Email" name="email" ng-model="email" required>
-                    <input type="password" placeholder="Пароль" required>
-                    <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" 
-                           ng-disabled="myForm.email.$dirty && myForm.email.$invalid">
+                    <input type="text" placeholder="Логин" ng-model="user.login" required>
+                    <input type="email" placeholder="Email" name="email" ng-model="user.email" required>
+                    <input type="password" placeholder="Пароль" ng-model="user.password" required>
+                    <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" ng-click="register(user)"
+                           ng-disabled="myForm.user.email.$dirty && myForm.user.email.$invalid">
 
-                    <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
-                        <span ng-show="myForm.email.$error.required">Email is required.</span>
-                        <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+                    <span style="color:red" ng-show="myForm.user.email.$dirty && myForm.user.email.$invalid">
+                        <span ng-show="myForm.user.email.$error.required">Email is required.</span>
+                        <span ng-show="myForm.user.email.$error.email">Invalid email address.</span>
                     </span>
                 </form>
             </div>
@@ -41,8 +41,8 @@
         </div>
         <div class="main-signin__middle">
             <div class="middle__form">
-                <input type="email" placeholder="Email">
-                <input type="submit" value="ВОССТАНОВИТЬ">
+                <input type="email" placeholder="Email" ng-model="user.email">
+                <input type="submit" value="ВОССТАНОВИТЬ" ng-click="reset_password(user)">
             </div>
         </div>
     </div>

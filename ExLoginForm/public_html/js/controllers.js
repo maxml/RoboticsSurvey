@@ -108,14 +108,12 @@ controllerModule.controller('LoginCtrl', [
     function ($scope, $location, $route, $timeout, ParseService) {
 
         var Account = ParseService.Account;
-
         $scope.user = {
             'username': (Account.isLoggedIn()) ? Account.getCurrentUser()
                     .get('username') : '',
             'password': (Account.isLoggedIn()) ? Account.getCurrentUser()
                     .get('password') : ''
         };
-
         $scope.login = function (user) {
             console.log(user.username);
             console.log(user.password);
@@ -129,11 +127,18 @@ controllerModule.controller('LoginCtrl', [
                     alert(error.message);
                 }
             });
-
-        }
+        };
+        $scope.register = function (user) {
+            console.log(user.username);
+            console.log(user.password);
+            Account.register(user.login, user.email, user.password);
+        };
+        
+        $scope.reset_password = function(user) {
+            Account.reset(user.email);
+        };
 
     }]);
-
 controllerModule.controller('LogoutCtrl', ['$route', '$location', '$timeout',
     'ParseService', function ($route, $location, $timeout, ParseService) {
 
@@ -143,23 +148,18 @@ controllerModule.controller('LogoutCtrl', ['$route', '$location', '$timeout',
         })
 
     }]);
-
 controllerModule.controller('HomeCtrl', ['$scope', '$route', '$location', '$translate', 'ParseService',
     function ($scope, $route, $location, $translate, ParseService) {
         $scope.parse = ParseService;
-        
         $scope.logout = function () {
             ParseService.Account.logout();
             $location.path("/login");
             $route.reload();
         };
-        
-        $scope.changeLanguage = function(lang) {
+        $scope.changeLanguage = function (lang) {
             $translate.use(lang);
         };
-
     }]);
-
 // Parent scope for CRUD pages
 controllerModule
         .controller(
@@ -174,22 +174,16 @@ controllerModule
                             StandardNgTable) {
 
                         $scope.ParseCrud = {};
-
                         $scope.crudObjects = [];
-
                         $scope.createData = {};
                         $scope.editData = {};
-
                         $scope.performingEdit = false;
-
                         $scope.fetchingCrud = true;
                         $scope.loadData = function (query) {
 
                             $scope.fetchingCrud = true;
-
                             $scope.createData = $scope.ParseCrud
                                     .getTemplate();
-
                             $scope.ParseCrud
                                     .fetchAll(query)
                                     .then(
@@ -199,10 +193,8 @@ controllerModule
 
                                                 $scope.crudObjects = $scope.ParseCrud
                                                         .getScopeFriendlyObjects(result);
-
                                                 $scope.tableParams = StandardNgTable
                                                         .getTable($scope.crudObjects);
-
                                                 $scope.fetchingCrud = false;
                                                 // console
                                                 // .log('Done loading '
@@ -212,7 +204,6 @@ controllerModule
 
                                             });
                         };
-
                         $scope.add = function () {
 
                             // define a promise to handle when added
@@ -220,32 +211,25 @@ controllerModule
                             promise.then(function (result) {
                                 var scopedParseObject = $scope.ParseCrud
                                         .getScopeFriendlyObject(result);
-
                                 $scope.crudObjects.push(scopedParseObject);
-
                                 $scope.createData = $scope.ParseCrud
                                         .getTemplate();
                             }, function (error) {
                                 console.log(error);
                             });
-
                             $scope.ParseCrud
                                     .add($scope.createData, promise);
                         };
-
                         $scope.edit = function () {
                             $scope.performingEdit = true;
                         };
-
                         $scope.cancel = function () {
                             $scope.performingEdit = false;
                         };
-
                         $scope.save = function (scopedParseObject) {
 
                             var index = $scope.crudObjects
                                     .indexOf(scopedParseObject);
-
                             $scope.ParseCrud
                                     .update(scopedParseObject)
                                     .then(
@@ -256,7 +240,6 @@ controllerModule
                                                         .getScopeFriendlyObject(result);
                                                 console
                                                         .log($scope.crudObjects[index]);
-
                                             }, function (error) {
                                         // TODO reset the scoped
                                         // object
@@ -265,7 +248,6 @@ controllerModule
                                     });
                             $scope.performingEdit = false;
                         };
-
                         $scope.remove = function (scopedParseObject) {
 
                             var modalInstance = $modal
@@ -280,7 +262,6 @@ controllerModule
                                         }
 
                                     });
-
                             modalInstance.result
                                     .then(function () {
 
@@ -306,7 +287,6 @@ controllerModule
                                                         });
                                     });
                         };
-
                     }]).directive('crudEditDelete', function () {
     return {
         restrict: 'E',
@@ -320,50 +300,38 @@ controllerModule
     };
 });
 ;
-
 controllerModule.controller('GuardCtrl', ['$scope', 'ParseObjects',
     function ($scope, ParseObjects) {
 
         var ParseObject = ParseObjects.ParseGuardObject;
-
         ParseObject.setHiddenData({
             ACL: new Parse.ACL(Parse.User.current()),
             owner: Parse.User.current()
         });
-
         $scope.$parent.ParseCrud = ParseObject;
         $scope.$parent.loadData();
-
     }]);
-
 controllerModule.controller('ClientCtrl', ['$scope', 'ParseObjects',
     function ($scope, ParseObjects) {
 
         var ParseObject = ParseObjects.ParseClientObject;
-
         ParseObject.setHiddenData({
             ACL: new Parse.ACL(Parse.User.current()),
             owner: Parse.User.current()
         });
-
         $scope.$parent.ParseCrud = ParseObject;
         $scope.$parent.loadData();
-
     }]);
-
 controllerModule.controller('CircuitCtrl', ['$scope', 'ParseObjects',
     function ($scope, ParseObjects) {
 
         var ParseObject = ParseObjects.ParseCircuitObject;
-
         ParseObject.setHiddenData({
             ACL: new Parse.ACL(Parse.User.current()),
             owner: Parse.User.current()
         });
-
         $scope.$parent.ParseCrud = ParseObject;
         $scope.$parent.loadData();
-
     }]);
 controllerModule.controller('CircuitunitCtrl', [
     '$scope',
@@ -372,9 +340,7 @@ controllerModule.controller('CircuitunitCtrl', [
     function ($scope, $routeSegment, ParseObjects) {
 
         $scope.$routeSegment = $routeSegment;
-
         $scope.fetchingCircuits = true;
-
         // fetch circuits to populate dropdown
         $scope.parseCircuitObject = ParseObjects.ParseCircuitObject;
         $scope.parseCircuitObject.fetchAll().then(
@@ -382,11 +348,8 @@ controllerModule.controller('CircuitunitCtrl', [
 
                     $scope.circuits = $scope.parseCircuitObject
                             .getScopeFriendlyObjects(result);
-
                     $scope.fetchingCircuits = false;
-
                 });
-
         // fetch clients to populate dropdown in CircuitunitSelectedCtrl
         // they are loaded here so that they are not reloaded for every
         // change in Circuit selection
@@ -394,9 +357,7 @@ controllerModule.controller('CircuitunitCtrl', [
         parseClientObject.fetchAll().then(function (result) {
             $scope.clients = result;
         });
-
     }]);
-
 controllerModule
         .controller(
                 'CircuitunitSelectedCtrl',
@@ -408,7 +369,6 @@ controllerModule
 
                         $scope.selectedCircuit = '';
                         $scope.$routeSegment = $routeSegment;
-
                         // this will be called if:
                         // 1) reloading page
                         // 2) selecting a dropdown value
@@ -422,7 +382,6 @@ controllerModule
                                                 setSelectedCircuit($routeSegment.$routeParams.id);
                                             }
                                         });
-
                         function setSelectedCircuit(routeId) {
                             angular
                                     .forEach(
@@ -435,12 +394,9 @@ controllerModule
                                                     // store scoped circuit
                                                     // to add name badge
                                                     $scope.scopedParentCircuit = parentScopedCircuit;
-
                                                     var ParseObject = ParseObjects.ParseCircuitunitObject;
-
                                                     var selectedCircuitParseObject = $scope.parseCircuitObject
                                                             .findParseObject(parentScopedCircuit);
-
                                                     ParseObject
                                                             .setHiddenData({
                                                                 circuit: selectedCircuitParseObject,
@@ -450,7 +406,6 @@ controllerModule
                                                                 owner: Parse.User
                                                                         .current()
                                                             });
-
                                                     // define a new query
                                                     var query = ParseObject
                                                             .fetchAllQuery();
@@ -461,9 +416,7 @@ controllerModule
                                                     // populates the client
                                                     // object
                                                     query.include('client');
-
                                                     $scope.$parent.$parent.ParseCrud = ParseObject;
-
                                                     // load data using the
                                                     // new query
                                                     $scope.$parent.$parent
@@ -473,7 +426,6 @@ controllerModule
                         }
 
                     }]);
-
 controllerModule.controller('MainCtrl', [
     '$scope',
     '$location',
@@ -485,14 +437,11 @@ controllerModule.controller('MainCtrl', [
         angular.isUndefinedOrNull = function (val) {
             return angular.isUndefined(val) || val === null;
         };
-
         $scope.ParseAccount = ParseService.Account;
         $scope.$routeSegment = $routeSegment;
-
         $scope.go = function (path) {
             $location.path(path);
         };
-
         // auto direct based on login status
         $scope.$on('routeSegmentChange', function () {
             if (!angular.isUndefinedOrNull($scope.$routeSegment)
@@ -508,17 +457,13 @@ controllerModule.controller('MainCtrl', [
                 }
             }
         });
-
     }]);
-
 var ModalSimpleOkCancelInstanceCtrl = function ($scope, $modalInstance, name) {
 
     $scope.name = name;
-
     $scope.ok = function () {
         $modalInstance.close(true);
     };
-
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };

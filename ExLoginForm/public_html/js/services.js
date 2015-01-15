@@ -31,6 +31,36 @@ app.service('ParseService', function () {
             Parse.User.logOut();
         };
 
+        this.register = function (login, email, password) {
+            var user = new Parse.User();
+            user.set("username", login);
+            user.set("password", password);
+            user.set("email", email);
+
+            user.signUp(null, {
+                success: function (user) {
+                    // Hooray! Let them use the app now.
+                    alert("Please, login with your credentials!")
+                },
+                error: function (user, error) {
+                    // Show the error message somewhere and let the user try again.
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            });
+        };
+
+        this.reset = function (email) {
+            Parse.User.requestPasswordReset(email, {
+                success: function () {
+                    // Password reset request was sent successfully
+                    alert("Check your inbox!")
+                },
+                error: function (error) {
+                    // Show the error message somewhere
+                    alert("Error: " + error.code + " " + error.message);
+                }
+            });
+        };
     };
 
 });
