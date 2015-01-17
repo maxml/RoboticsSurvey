@@ -7,7 +7,7 @@ angular
 //        'ngSanitize',
         'ngRoute',
         'ui.bootstrap',
-        'ngGrid',
+        'bsTable'
 //        'blueimp.fileupload',
 //        'ui.sortable',
 //        'mgo-angular-wizard'
