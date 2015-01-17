@@ -25,9 +25,9 @@ angular
                         templateUrl: 'parts/survey-list.html',
                         controller: 'ManagerSurveyListCtrl'
                     })
-                    .when("/questions/0", {
-                        redirectTo: "/tests"
-                    })
+//                    .when("/questions/0", {
+//                        redirectTo: "/tests"
+//                    })
                     .when("/questions/:num", {
                         controller: "PassingSurveyListCtrl",
                         templateUrl: "parts/ask_view.html"
