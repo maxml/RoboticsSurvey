@@ -4928,7 +4928,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .pagination {
-  display: inline-block;
+  display: inline;
   padding-left: 0;
   margin: 20px 0;
   border-radius: 4px;

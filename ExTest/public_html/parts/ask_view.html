@@ -1,0 +1,30 @@
+<div class="content">
+    <div class="question_container">
+        <span class='testclass'>{{currAnswer.text}}</span>
+    </div>
+
+    <div class="response_container">
+        <div class="row" ng-if="currAnswer.type == 'single' || currAnswer.type == 'multiple'" 
+             ng-repeat="option in options">
+            <!--<div class="row" ng-repeat="option in qholder.options | orderBy:'value':false | filterQtype:qholder.inputType:qholder.type">-->
+            <div class="col-xs-1">
+                <input type="{{currAnswer.type}}" id="{{option}}" value="{{option}}" name="{{option}}" />
+            </div>
+            <div class="col-xs-11">{{option}}</div>
+        </div>       
+
+        <div class="col-xs-12" ng-if="currAnswer.type == 'text'">        
+            <textarea class="srv_textarea" name=""></textarea>
+        </div>
+
+    </div>
+
+    <div class="submit_button">
+
+        <input type="button" value="Prev" ng-Click="prevPage()" />
+        <input type="button" value="Next" ng-Click="nextPage()" />
+
+    </div>
+</div>
+
+

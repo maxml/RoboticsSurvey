@@ -1,0 +1,62 @@
+[		
+	{
+		"name":"q1",
+		"type":"single",
+		"question":"Please select a response from responses 1 to 4...",
+		"forced":"false",
+		"inputType":"radio",
+		"options":[			
+			{
+				"value":"3",
+				"text":"Response 3"
+			},	
+			{
+				"value":"4",
+				"text":"Response 4"
+			},			
+			{
+				"value":"2",
+				"text":"Response 2"
+			},
+			{
+				"value":"1",
+				"text":"Response 1"
+			}
+		]
+	},
+	{
+		"name":"q2",
+		"type":"multiple",
+		"question":"Please select a multiple responses from 1 to 4...",
+		"forced":"false",
+		"inputType":"checkbox",
+		"options":[			
+			{
+				"value":"3",
+				"text":"Response 3"
+			},	
+			{
+				"value":"4",
+				"text":"Response 4"
+			},			
+			{
+				"value":"2",
+				"text":"Response 2"
+			},
+			{
+				"value":"1",
+				"text":"Response 1"
+			}
+		]
+	},
+	{
+		"name":"q3",
+		"type":"text",
+		"question":"Please enter your opinion on the box below:",
+		"forced":"false",
+		"inputType":"textarea",
+		"options":[
+						
+		]
+	}
+]

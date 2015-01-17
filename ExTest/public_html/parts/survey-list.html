@@ -4,23 +4,18 @@
     <button class="btn btn-success" style="width: 400px; margin-bottom: 20px"> Add New Survey</button>
     <!--    <div class="gridStyle" ng-grid="gridOptions">
         </div>-->
-    <table class="table table-hover table-bordered" >
+    <table class="table table-hover table-bordered" bs-table>
         <thead>
             <tr>
-                <th >
-<!--                    ng-click="predicate = 'name';
-                            reverse = !reverse"-->
-                                Title</th>
-
-                <th>
-                    <!--                    ng-click="predicate = 'score';
-                            reverse = !reverse" -->
-                                Score</th>
+                <th ng-click="predicate = 'name';
+                            reverse = !reverse">Title</th>
+                <th ng-click="predicate = 'score';
+                            reverse = !reverse">Score</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="survey in surveyList" ng-click="getSurveyById(survey.id)">
+            <tr ng-repeat="survey in surveyList| orderBy:predicate:reverse" ng-click="onClickSurvey(survey.id, survey.questions)">
                 <td width="125px">{{survey.name}}</td>
                 <td>{{survey.score}}</td>
                 <td class="action-column">
@@ -34,5 +29,7 @@
 <div style="float: right; border: 1px solid black ; width: 700px;padding: 10px; border-radius: 4px; margin-top: 55px">
     <p style=" margin: 10px">{{selectedSurveyText}}</p>
     <br>
-    <button class="btn btn-default" ng-click="start()" style="float: right">Start!</button>
+    <p class="submit_button">
+        <button class="btn btn-default" ng-click="startTest()" style="float: right">Start!</button>
+    </p>
 </div>

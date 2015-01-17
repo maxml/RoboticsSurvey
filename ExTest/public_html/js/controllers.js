@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module('surveyApp')
         .controller('MainCtrl', function ($scope) {
             $scope.awesomeThings = [
@@ -8,74 +7,14 @@ angular.module('surveyApp')
                 'Karma'
             ];
         });
-
 angular.module('surveyApp')
-        .controller('ManagerSurveyListCtrl', function ($scope, $timeout) {
+        .controller('ManagerSurveyListCtrl', function ($scope, $timeout, $route, $location, $rootScope) {
 
             $scope.surveyList = [];
-
-//            $scope.showModal = function (currentSurvey) {
-//                var isNew = false;
-//                if (!!currentSurvey) {
-//                    $scope.currentSurvey = currentSurvey;
-//                } else {
-//                    isNew = true;
-//                    $scope.currentSurvey = {
-//                        title: "new suerver",
-//                        questions: [{
-//                                title: "question",
-//                                answers: [{
-//                                        text: "answer 1"
-//                                    }, {
-//                                        text: "answer 2"
-//                                    }]
-//                            }]
-//                    };
-//
-//                }
-//                var modalInstance = $modal.open({
-//                    templateUrl: 'views/manager/add-survey.html',
-//                    controller: 'AddNewSurvey',
-//                    backdrop: false,
-//                    resolve: {
-//                        currentSurvey: function () {
-//                            return $scope.currentSurvey;
-//                        },
-//                        isNew: function () {
-//                            return isNew;
-//                        },
-//                        surveyList: function () {
-//                            return $scope.surveyList;
-//                        }
-//
-//                    }
-//
-//                })
-//            }
-
-
+            $scope.reverse = false;
             $scope.selectedSurveyText = '';
 
-//            $scope.gridOptions = {
-//                data: $scope.surveyList,
-//                columnDefs: [
-//                    {
-//                        field: 'points',
-//                        displayName: 'Points'
-//                    },
-//                    {
-//                        field: 'name',
-//                        displayName: 'Title'
-//                    }],
-//                multiSelect: false,
-//                selectedItems: $scope.selectedSurvey,
-//                dblClickFn: $scope.showModal,
-//                clickFn: $scope.showModal,
-//                plugins: [ngGridClick]
-//                        //rowTemplate: '<div ng-click="showModal(row)" ng-style="{\'cursor\': row.cursor, \'z-index\': col.zIndex() }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}" ng-cell></div>'
-//            };
-
-            $scope.getSurveyById = function (surveyId) {
+            $scope.getSurveyTextById = function (surveyId) {
                 if ($scope.surveyList.length === 0) {
                     $scope.selectedSurveyText = "Default text";
                     return;
@@ -100,13 +39,12 @@ angular.module('surveyApp')
             $scope.getSurveyList = function () {
                 Parse.initialize("EGBizx6dufMsT8d8ZnxmjP2qSEIsW2FzBwtdZNa7",
                         "9KVQaAV99yIHgZmgsmhp54LxqfWqkoxFFwIwuk4u");
-
                 var Survey = Parse.Object.extend("Survey");
                 var query = new Parse.Query(Survey);
                 query.lessThanOrEqualTo("points", 21);
                 query.find({
                     success: function (results) {
-                        alert("Successfully retrieved " + results.length + " scores.");
+                        //alert("Successfully retrieved " + results.length + " scores.");
                         // Do something with the returned Parse.Object values
                         for (var i = 0; i < results.length; i++) {
 
@@ -115,12 +53,10 @@ angular.module('surveyApp')
                             object.name = results[i].get('name');
                             object.score = results[i].get('points');
                             object.text = results[i].get('desc');
+                            object.questions = results[i].get('questions');
 
                             $scope.surveyList.push(object);
-//                            alert(object.id + ' - ' + object.get('name'));
                         }
-
-//                        $scope.surveyList = results;
 
                         $scope.$apply();
                     },
@@ -129,7 +65,112 @@ angular.module('surveyApp')
                     }
                 });
             };
+            $scope.onClickSurvey = function (surveyId, answerNumber) {
+                $rootScope.surveyId = surveyId;
+                $rootScope.answerNumber = answerNumber;
+
+                $scope.getSurveyTextById(surveyId);
+            };
+
+            $scope.startTest = function () {
+                if ($rootScope.surveyId === undefined || $rootScope.surveyId === '') {
+                    alert('Choose test, please!');
+                    return;
+                }
+
+                $location.path("/questions/" + 0);
+                $route.reload();
+            };
+
             $scope.getSurveyList();
-            $scope.getSurveyById(-1);
-//$scope.$apply();
+            $scope.getSurveyTextById(-1);
+
         });
+
+angular.module('surveyApp')
+        .controller('PassingSurveyListCtrl', function ($scope, $routeParams, $location) {
+
+            $scope.currentNum = $routeParams.num;
+            $scope.survey = [];
+            $scope.answers = [];
+            $scope.options = [];
+
+            $scope.nextPage = function () {
+//                var nxtQnum = (srvapp.currentNum * 1) + 1;
+                $location.path("/questions/" + ($routeParams.num * 1 + 1));
+            };
+            $scope.prevPage = function () {
+//                var prevQnum = (srvapp.currentNum * 1) - 1;
+                $location.path("/questions/" + ($routeParams.num * 1 + 1));
+            };
+
+            $scope.initSurvey = function () {
+
+                var surveyId = $rootScope.surveyId;
+                var answerNumber = $rootScope.answerNumber;
+
+                var Question = Parse.Object.extend("Question");
+                var query = new Parse.Query(Question);
+
+                query.equalTo("surveyId", surveyId);
+                query.find({
+                    success: function (results) {
+                        alert("Successfully retrieved " + results.length + " scores.");
+                        // Do something with the returned Parse.Object values
+                        var answersBuff = [];
+
+                        for (var i = 0; i < results.length; i++) {
+
+                            var answer = [];
+                            answer.id = results[i].id;
+                            answer.type = results[i].get('type');
+                            answer.text = results[i].get('text');
+                            answer.options = results[i].get('options');
+
+                            answersBuff.push(answer);
+                        }
+
+                        $scope.answers = randomMassAnswers(answersBuff, answerNumber);
+                        $scope.options = currOptions();
+
+                        $scope.$apply();
+                    },
+                    error: function (error) {
+                        alert("Error: " + error.code + " " + error.message);
+                    }
+                });
+                $scope.initSurvey();
+
+                currOptions = function () {
+                    return getOptions($scope.answers[$scope.currentNum]);
+                };
+
+                function getOptions(options) {
+                    var res = [];
+                    res = JSON.parse(options);
+                    return res;
+                }
+
+                randomMassAnswers = function (answers, last) {
+                    if (answers.length === 0) {
+                        return;
+                    } else if (answers.length === 1) {
+                        return this[0];
+                    } else {
+                        var res = [];
+                        var capacity = 0;
+                        var num = 0;
+                        do {
+                            num = Math.floor(Math.random() * answers.length);
+                            res.push(answers[num]);
+                            capacity++;
+                        } while (capacity === last);
+                        return res;
+                    }
+                };
+
+                $scope.currAnswer = $scope.answers[$scope.currentNum];
+
+            };
+        });
+
