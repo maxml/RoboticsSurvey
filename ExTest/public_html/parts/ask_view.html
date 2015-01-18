@@ -13,7 +13,7 @@
             <div class="col-xs-11">{{op}}</div>
         </div>       
 
-        <div class="col-xs-12" ng-if="currAnswer.type == 'textarea'">        
+        <div class="col-xs-12" ng-if="currAnswer.type === 'textarea'">        
             <textarea class="srv_textarea" name=""></textarea>
         </div>
 
@@ -21,10 +21,23 @@
 
     <div class="submit_button">
 
-        <input type="button" value="Prev" ng-Click="prevPage()" />
-        <input type="button" value="Next" ng-Click="nextPage()" />
+        <input type="button" value="Prev" ng-Click="prevPage()" ng-show="!isPrevButtonHide"/>
+        <input type="button" value="Next" ng-Click="nextPage()" ng-show="!isNextButtonHide"/>
 
     </div>
+    <!--    Click me: <input type="checkbox" ng-model="checked"><br/>
+        <div>
+            Show:
+            <div class="check-element animate-show" ng-show="checked">
+                <span class="glyphicon glyphicon-thumbs-up"></span> I show up when your checkbox is checked.
+            </div>
+        </div>
+        <div>
+            Hide:
+            <div class="check-element animate-show" ng-hide="checked">
+                <span class="glyphicon glyphicon-thumbs-down"></span> I hide when your checkbox is checked.
+            </div>
+        </div>-->
 </div>
 
 

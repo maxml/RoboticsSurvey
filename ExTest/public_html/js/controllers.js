@@ -205,6 +205,8 @@ angular.module('surveyApp')
             };
 
             initSurvey();
+            $scope.isPrevButtonHide = ($scope.currentNum === '0');
+            $scope.isNextButtonHide = ((localStorage.answerNumber - 1).toString() === $scope.currentNum);
 
             function Answer(id, type, text, options) {
 
