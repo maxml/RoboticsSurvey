@@ -32,6 +32,10 @@ angular
                         controller: "PassingSurveyListCtrl",
                         templateUrl: "parts/ask_view.html"
                     })
+                    .when("/result", {
+                        controller: "ResultSurveyCtrl",
+                        templateUrl: "parts/result.html"
+                    })
                     .otherwise({
                         redirectTo: '/'
                     });

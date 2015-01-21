@@ -4,17 +4,26 @@
     </div>
 
     <div class="response_container">
-        <div class="row" ng-if="currAnswer.type === 'radio' || currAnswer.type === 'checkbox'" 
-             ng-repeat="op in options.option">
+        <div class="row" ng-if="currAnswer.type === 'radio'" 
+             ng-repeat="op in options">
             <!--<div class="row" ng-repeat="option in qholder.options | orderBy:'value':false | filterQtype:qholder.inputType:qholder.type">-->
-            <div class="col-xs-1">
-                <input type="{{currAnswer.type}}" id="{{op}}" value="{{op}}" name="{{op}}" />
-            </div>
-            <div class="col-xs-11">{{op}}</div>
+            <!--<div class="col-xs-1">-->
+            <input type="{{currAnswer.type}}" ng-model="$parent.$parent.currAsk" value="{{op}}"/>&nbsp;&nbsp;&nbsp;{{op}}
+
+            <!--</div>-->
         </div>       
+        <div>currently selected: {{currAsk}}</div>
 
         <div class="col-xs-12" ng-if="currAnswer.type === 'textarea'">        
-            <textarea class="srv_textarea" name=""></textarea>
+            <textarea class="srv_textarea" name="" ng-model="$parent.currAsk"></textarea>
+        </div>
+
+        <div class="row" ng-if="currAnswer.type === 'checkbox'" ng-repeat="op in options">
+            <!--<label class="checkbox" for="{{op}}">-->
+                <input type="checkbox" ng-model="selection.ids[op]" name="group" id="{{op}}" />
+                {{op}}
+            <!--</label>-->
+            <pre ng-bind="selection.ids | json"></pre>    
         </div>
 
     </div>
@@ -22,7 +31,9 @@
     <div class="submit_button">
 
         <input type="button" value="Prev" ng-Click="prevPage()" ng-show="!isPrevButtonHide"/>
+        <input type="button" value="Refuse test passing" ng-Click="refuse()" ng-show="isPrevButtonHide"/>
         <input type="button" value="Next" ng-Click="nextPage()" ng-show="!isNextButtonHide"/>
+        <input type="button" value="Finish" ng-Click="finish()" ng-show="isNextButtonHide"/>
 
     </div>
     <!--    Click me: <input type="checkbox" ng-model="checked"><br/>
