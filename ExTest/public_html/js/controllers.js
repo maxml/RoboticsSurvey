@@ -43,7 +43,7 @@ angular.module('surveyApp')
             $scope.getSurveyList = function () {
                 var Survey = Parse.Object.extend("Survey");
                 var query = new Parse.Query(Survey);
-                query.lessThanOrEqualTo("points", 21);
+                query.lessThanOrEqualTo("points", 10);
                 query.find({
                     success: function (results) {
                         //alert("Successfully retrieved " + results.length + " scores.");
@@ -103,7 +103,7 @@ angular.module('surveyApp')
             $scope.marks = [];
 
             $scope.currAsk = '';
-            $scope.selection = {ids: {}};
+            $scope.selection = [];
 
             $scope.asks = [];
             $scope.userMarks = [];
@@ -163,6 +163,9 @@ angular.module('surveyApp')
 
                         if (results.length !== 0)
                             localStorage.isStarted = true;
+                        
+                        localStorage.setItem("res", null);
+                        localStorage.setItem("mark", null);
                     },
                     error: function (error) {
                         alert("Error: " + error.code + " " + error.message);
@@ -177,7 +180,78 @@ angular.module('surveyApp')
             };
 
             function getResult() {
-                alert($scope.currAsk);
+                if (localStorage.getItem("res") !== null && localStorage.getItem("res") !== undefined) {
+                    $scope.asks = JSON.parse(localStorage.getItem("res"));
+                    $scope.userMarks = JSON.parse(localStorage.getItem("mark"));
+                } else {
+                    $scope.asks = [];
+                    $scope.userMarks = [];
+                }
+
+                if ($scope.currAsk === '') {
+//                    $scope.asks[$routeParams.num] = $scope.selection;
+
+                    var mark = 0;
+                    for (var i = 0; i < $scope.selection.length; i++) {
+
+                        if ($scope.asks.length > $routeParams.num) {
+
+                            if ($scope.selection[i] === true) {
+                                $scope.asks.insert($routeParams.num, $scope.options[i]);
+                                mark += $scope.marks[i] * 1;
+                            }
+                        } else {
+
+                            if ($scope.selection[i] === true) {
+                                $scope.asks.push($routeParams.num, $scope.options[i]);
+                                mark += $scope.marks[i] * 1;
+                            }
+                        }
+
+                    }
+
+                    if ($scope.asks > $routeParams.num) {
+                        $scope.userMarks.insert($routeParams.num, mark);
+                    } else {
+                        $scope.userMarks.push($routeParams.num, mark);
+                    }
+
+                } else {
+
+//                    if ($scope.asks < $routeParams.num) {
+                    $scope.asks[$routeParams.num * 1] = $scope.currAsk;
+                    $scope.userMarks[$routeParams.num * 1] = getValue($scope.currAsk);
+//                    } else {
+//                        $scope.asks.push($routeParams.num, $scope.currAsk);
+//                        $scope.userMarks.push($routeParams.num, getValue($scope.currAsk));
+//                    }
+                }
+
+                var res = JSON.stringify($scope.asks);
+                var markRes = JSON.stringify($scope.userMarks);
+
+                localStorage.setItem("res", res);
+                localStorage.setItem("mark", markRes);
+
+                $scope.currAsk = '';
+                $scope.selection = [];
+
+
+            }
+
+            function getValue(value) {
+                var mark = "";
+                if ($scope.options === undefined) {
+                    return "1";
+                }
+
+                for (var i = 0; i < $scope.options.length; i++) {
+                    if (value == $scope.options[i]) {
+                        mark = $scope.marks[i];
+                    }
+                }
+
+                return mark;
             }
 
             $scope.prevPage = function () {
@@ -186,6 +260,13 @@ angular.module('surveyApp')
 
             $scope.finish = function () {
                 getResult();
+
+                var res = JSON.stringify($scope.asks);
+                var markRes = JSON.stringify($scope.userMarks);
+
+                localStorage.setItem("res", res);
+                localStorage.setItem("mark", markRes);
+
                 $location.path("/result");
             };
 
@@ -303,17 +384,56 @@ angular.module('surveyApp')
         });
 
 angular.module('surveyApp')
-        .controller('ResultSurveyCtrl', function ($scope, $timeout, $routeParams, $location) {
+        .controller('ResultSurveyCtrl', function ($scope, $timeout, $route, $location) {
 
             $scope.answers = [];
+//            $scope.asks = [];
+            $scope.userMarks = [];
+
+            var init = function () {
+                if (localStorage.getItem("mark") !== null && localStorage.getItem("res") !== undefined) {
+//                    $scope.asks = JSON.parse(localStorage.getItem("res"));
+                    $scope.userMarks = JSON.parse(localStorage.getItem("mark"));
+                } else {
+//                    $scope.asks = [];
+                    $scope.userMarks = [];
+                }
+
+                logToDatabase();
+                userScores();
+            };
+//            init();
 
             $scope.back = function () {
-                logToDatabase();
                 $location.path("/tests");
                 $route.reload();
             };
 
             var logToDatabase = function () {
-                alert(123);
+                var user = Parse.User.current();
+
+                var Result = new Parse.Object.extend("Result");
+                var result = new Result();
+
+                result.set("surveyId", localStorage.getItem("surveyId"));
+                result.set("userId", user.id);
+                result.set("result", localStorage.getItem("res"));
+
+                result.save();
             };
+
+            var userScores = function () {
+                var user = Parse.User.current();
+                user.set("point", user.get('point') + summ());
+
+                user.save();
+            };
+
+            function summ() {
+                var summ = 0;
+                for (var i = 0; i < $scope.userMarks.length; i++) {
+                    summ += $scope.userMarks[i] * 1;
+                }
+                return summ;
+            }
         });

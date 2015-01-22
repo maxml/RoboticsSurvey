@@ -20,10 +20,10 @@
 
         <div class="row" ng-if="currAnswer.type === 'checkbox'" ng-repeat="op in options">
             <!--<label class="checkbox" for="{{op}}">-->
-                <input type="checkbox" ng-model="selection.ids[op]" name="group" id="{{op}}" />
+                <input type="checkbox" ng-model="selection[options.indexOf(op)]" name="group" id="{{op}}" />
                 {{op}}
             <!--</label>-->
-            <pre ng-bind="selection.ids | json"></pre>    
+            <pre ng-bind="selection | json"></pre>    
         </div>
 
     </div>
