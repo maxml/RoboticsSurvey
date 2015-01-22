@@ -1,59 +1,94 @@
-<div class="main-signin">
-    <div id="containerLogin" class="tabContainer active">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4 tab-content" id="my-tab-content"> 
 
-        <div class="main-signin__head">
-            <p>АВТОРИЗАЦИЯ</p>
-        </div>
-        <div class="main-signin__middle">
-            <div class="middle__form">
-                <form>
-                    <input type="text" placeholder="Логин/email" ng-model="user.username">
-                    <input type="password" placeholder="Пароль" ng-model="user.password">
-                    <input type="submit" value="ВОЙТИ" ng-click="login(user)">
-                </form>
+            <div class="account-wall tab-pane" id="login">
+                <h3 class="text-center login-title">Авторизация</h1>
+                    <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                         alt="">
+                    <form class="form-signin">
+                        <input type="text" class="form-control" ng-model="user.username" placeholder="Email" required autofocus>
+                        <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login(user)">
+                            ВОЙТИ</button>
+                    </form>
             </div>
-        </div>
-    </div>
-    <div id="containerRegister" class="tabContainer">
-        <div class="main-signin__head">
-            <p>РЕГИСТРАЦИЯ</p>
-        </div>
-        <div class="main-signin__middle">
-            <div class="middle__form">
-                <form name="myForm" novalidate>
-                    <input type="text" placeholder="Логин" ng-model="user.login" required>
-                    <input type="email" placeholder="Email" name="email" ng-model="user.email" required>
-                    <input type="password" placeholder="Пароль" ng-model="user.password" required>
-                    <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" ng-click="register(user)"
-                           ng-disabled="myForm.user.email.$dirty && myForm.user.email.$invalid">
 
-                    <span style="color:red" ng-show="myForm.user.email.$dirty && myForm.user.email.$invalid">
-                        <span ng-show="myForm.user.email.$error.required">Email is required.</span>
-                        <span ng-show="myForm.user.email.$error.email">Invalid email address.</span>
-                    </span>
-                </form>
+            <div class="account-wall tab-pane" id="reg">
+                <h3 class="text-center login-title">Регистрация</h1>
+                    <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                         alt="">
+                    <form class="form-signin">
+                        <input type="text" class="form-control" ng-model="user.login" placeholder="Username" required autofocus>
+                        <input type="email" class="form-control" ng-model="user.email" placeholder="Email" required>
+                        <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="register(user)">
+                            ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                    </form>
             </div>
+
+            <div class="account-wall tab-pane" id="change">
+                <h3 class="text-center login-title">Восстановления пароля</h1>
+                    <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
+                         alt="">
+                    <form class="form-signin">
+                        <input type="text" class="form-control" ng-model="user.email" placeholder="Email" required autofocus>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="reset_password(user)">
+                            ВОССТАНОВИТЬ</button>
+                    </form>
+            </div>
+
+            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                <li><a href="#login" data-toggle="tab" class="text-center new-account active">Авторизация</a></li>
+                <li><a href="#reg" data-toggle="tab" class="text-center new-account">Регистрация</a></li>
+                <li style="width: 120px"><a href="#change" data-toggle="tab" class="text-center new-account">Восстановления пароля</a></li>
+            </ul>
         </div>
     </div>
-    <div id="containerForgot" class="tabContainer">
-        <div class="main-signin__head">
-            <p>Восстановления пароля</p>
-        </div>
-        <div class="main-signin__middle">
-            <div class="middle__form">
-                <input type="email" placeholder="Email" ng-model="user.email">
-                <input type="submit" value="ВОССТАНОВИТЬ" ng-click="reset_password(user)">
+</div>
+
+<div class="container" ng-if="existUser()">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{name}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
+
+                        <div class=" col-md-9 col-lg-9 "> 
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><a ng-href="mailto: {{email}}">{{email}}</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email is verified:</td>
+                                        <td>{{emailVerified}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Create date:</td>
+                                        <td>{{createdAt}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Points:</td>
+                                        <td>{{points}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <a href="#" class="btn btn-primary" ng-click="logout()">Logout</a>
+                            <a href="#" class="btn btn-primary" ng-click="goInside()">Go to portal</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
-    <div class="main-signin__foot">
-        <div class="foot__left">
-            <p>Возможности:</p>
-        </div>
-        <div class="foot__right tabs" id="tabs">
-            <a id="tabLogin" class="iconLogin active blueBox" title="Войти" onclick="click_tab(this)"></a>
-            <a id="tabRegister" class="iconRegister greenBox" title="Регистрация" onclick="click_tab(this)"></a>
-            <a id="tabForgot" class="iconForgot redBox" title="Забыл пароль?" onclick="click_tab(this)"></a>
         </div>
     </div>
 </div>

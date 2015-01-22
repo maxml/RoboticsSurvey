@@ -20,9 +20,7 @@ controllerModule.controller('LoginCtrl', ['$scope', '$location', '$route', '$tim
             console.log(user.password);
             Account.login(user.username, user.password, {
                 success: function (user) {
-                    console.info('redirect /home');
-                    $location.path("/home");
-                    $route.reload();
+                    alert('Success!');
                 },
                 error: function (user, error) {
                     alert(error.message);
@@ -34,10 +32,31 @@ controllerModule.controller('LoginCtrl', ['$scope', '$location', '$route', '$tim
             console.log(user.password);
             Account.register(user.login, user.email, user.password);
         };
-        
-        $scope.reset_password = function(user) {
+
+        $scope.reset_password = function (user) {
             Account.reset(user.email);
         };
+
+        $scope.logout = function () {
+            ParseService.Account.logout();
+//            $location.path("/login");
+//            $route.reload();
+        };
+
+        $scope.existUser = function () {
+            return Parse.User.current() !== null;
+        };
+
+        $scope.goInside = function () {
+            $location.path("/home");
+            $route.reload();
+        };
+        
+        $scope.name = Parse.User.current().get('username');
+        $scope.email = Parse.User.current().get('email');
+        $scope.emailVerified = Parse.User.current().get('emailVerified');
+        $scope.createdAt = Parse.User.current().createdAt;
+        $scope.points = Parse.User.current().get('point');
 
     }]);
 
@@ -54,11 +73,11 @@ controllerModule.controller('LogoutCtrl', ['$route', '$location', '$timeout',
 controllerModule.controller('HomeCtrl', ['$scope', '$route', '$location', '$translate', 'ParseService',
     function ($scope, $route, $location, $translate, ParseService) {
         $scope.parse = ParseService;
-        $scope.logout = function () {
-            ParseService.Account.logout();
-            $location.path("/login");
-            $route.reload();
-        };
+//        $scope.logout = function () {
+//            ParseService.Account.logout();
+//            $location.path("/login");
+//            $route.reload();
+//        };
         $scope.changeLanguage = function (lang) {
             $translate.use(lang);
         };
@@ -90,10 +109,10 @@ controllerModule.controller('MainCtrl', ['$scope', '$location', '$timeout', '$ro
                 }
             }
         });
-        
+
         $scope.awesomeThings = [
-                'HTML5 Boilerplate',
-                'AngularJS',
-                'Karma'
-            ];
+            'HTML5 Boilerplate',
+            'AngularJS',
+            'Karma'
+        ];
     }]);
