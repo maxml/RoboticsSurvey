@@ -6,10 +6,9 @@
 12) user points
 13) style langage bar and set strings
 15) style form errors, get error
-16) Devjam create test
-19) result from surveyjs-master
 20) filter icons for user interaction with surveys list 
 21) integrate all projects
+22) toTop
 -->
 
 <!--
@@ -26,18 +25,20 @@ exports.questions = [
     {q: 'What color your fav reality show?', a1: 'American Idol',
         a2: 'So You Think You Can Dance', a3: 'Lost', a4: 'I hate all reality shows'}
 ];-->
-<html>
+<html ng-app="Robotics">
     <head>
         <title>Робототехника</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
         <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery.dropotron.min.js"></script>
-        <script src="js/skel.min.js"></script>
-        <script src="js/skel-layers.min.js"></script>
-        <script src="js/init.js"></script>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/jquery/jquery.dropotron.min.js"></script>
+        <script src="vendor/skel/skel.min.js"></script>
+        <script src="vendor/skel/skel-layers.min.js"></script>
+
+        <script src="js/skel-init.js"></script>
+
         <noscript>
         <link rel="stylesheet" href="css/skel.css" />
         <link rel="stylesheet" href="css/style.css" />
@@ -79,8 +80,8 @@ exports.questions = [
                                                         <li><a href="#">Veroeros feugiat</a></li>
                                                     </ul>
                                                 </li>-->
-                        <li><a href="left-sidebar.html">Новости</a></li>
-                        <li><a href="right-sidebar.html">Личный кабинет</a></li>
+                        <li><a href="news.html">Новости</a></li>
+                        <li><a href="login.html">Личный кабинет</a></li>
                         <li><a href="no-sidebar.html">Тестирование</a></li>
                     </ul>
                 </nav>
@@ -193,7 +194,7 @@ exports.questions = [
                                 <h2>Робототехника</h2>
                                 <p>Человек, переходя на сайт видит несколько ярких картинок роботов, и описание простыми словами что такое робототехника, зачем она нужна и на сколько это круто. На портале будут высвечиваться последние новости из мира робототехники, статьи про роботов, робо картинки, мотивашки/демотиваторы и видеозаписи из Ютюба. Видео и часть статей будет доступна только зарегестрированным пользователям.  Некоторые статьи будут доступны наполовину – Вы читаете первую часть, увлекаетесь  ее содержанием, после чего видите сообщение – чтобы дочитать статью до конца Вам нужно зарегестрироваться/набрать еще 20 балов рейтинга. Еще видео могут быть разбиты на группы – Группа 1,2,3, 4 и т.д. Вы не знаете, какие именно интиресные ролики есть в группе 1, но чтобы ее открыть Вам нужно набрать 20 баллов рейтинга, а чтобы открыть ролики из 2 группы Вам нужно обладать званием  «Крутой техник»  и рейтингом в 40 баллов. </p>
                                 <!--<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper bibendum ipsum, et tristique augue fringilla eu. Vivamus id risus vel dolor auctor euismod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit amet phasellus quam turpis.</p>-->
-                                <a href="#" class="button icon fa-arrow-circle-right">Продолжить чтение</a>
+                                <a href="news.html" class="button icon fa-arrow-circle-right">Продолжить чтение</a>
                             </section>
                         </div>
 
@@ -281,16 +282,6 @@ exports.questions = [
                 </div>
             </footer>
         </div>
-        <script type="text/javascript">
-            (function ($) {
-                $.fn.goTo = function () {
-                    $('html, body').animate({
-                        scrollTop: 1300 + 'px'
-                    }, 'fast');
-                    return this; // for chaining...
-                }
-            })(jQuery);
-        </script>
 
     </body>
 </html>

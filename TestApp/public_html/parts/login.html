@@ -1,0 +1,59 @@
+<div class="main-signin">
+    <div id="containerLogin" class="tabContainer active">
+
+        <div class="main-signin__head">
+            <p>АВТОРИЗАЦИЯ</p>
+        </div>
+        <div class="main-signin__middle">
+            <div class="middle__form">
+                <form>
+                    <input type="text" placeholder="Логин/email" ng-model="user.username">
+                    <input type="password" placeholder="Пароль" ng-model="user.password">
+                    <input type="submit" value="ВОЙТИ" ng-click="login(user)">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="containerRegister" class="tabContainer">
+        <div class="main-signin__head">
+            <p>РЕГИСТРАЦИЯ</p>
+        </div>
+        <div class="main-signin__middle">
+            <div class="middle__form">
+                <form name="myForm" novalidate>
+                    <input type="text" placeholder="Логин" ng-model="user.login" required>
+                    <input type="email" placeholder="Email" name="email" ng-model="user.email" required>
+                    <input type="password" placeholder="Пароль" ng-model="user.password" required>
+                    <input type="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" ng-click="register(user)"
+                           ng-disabled="myForm.user.email.$dirty && myForm.user.email.$invalid">
+
+                    <span style="color:red" ng-show="myForm.user.email.$dirty && myForm.user.email.$invalid">
+                        <span ng-show="myForm.user.email.$error.required">Email is required.</span>
+                        <span ng-show="myForm.user.email.$error.email">Invalid email address.</span>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="containerForgot" class="tabContainer">
+        <div class="main-signin__head">
+            <p>Восстановления пароля</p>
+        </div>
+        <div class="main-signin__middle">
+            <div class="middle__form">
+                <input type="email" placeholder="Email" ng-model="user.email">
+                <input type="submit" value="ВОССТАНОВИТЬ" ng-click="reset_password(user)">
+            </div>
+        </div>
+    </div>
+    <div class="main-signin__foot">
+        <div class="foot__left">
+            <p>Возможности:</p>
+        </div>
+        <div class="foot__right tabs" id="tabs">
+            <a id="tabLogin" class="iconLogin active blueBox" title="Войти" onclick="click_tab(this)"></a>
+            <a id="tabRegister" class="iconRegister greenBox" title="Регистрация" onclick="click_tab(this)"></a>
+            <a id="tabForgot" class="iconForgot redBox" title="Забыл пароль?" onclick="click_tab(this)"></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="content">
+    <div class="question_container">
+        <span class='testclass'>{{currAnswer.text}}</span>
+    </div>
+
+    <div class="response_container">
+        <div class="row" ng-if="currAnswer.type === 'radio'" 
+             ng-repeat="op in options">
+            <!--<div class="row" ng-repeat="option in qholder.options | orderBy:'value':false | filterQtype:qholder.inputType:qholder.type">-->
+            <!--<div class="col-xs-1">-->
+            <input type="radio" ng-model="$parent.$parent.currAsk" value="{{op}}"/>&nbsp;&nbsp;&nbsp;{{op}}
+
+            <!--</div>-->
+        </div>       
+        <div>currently selected: {{currAsk}}</div>
+
+        <div class="col-xs-12" ng-if="currAnswer.type === 'textarea'">        
+            <textarea class="srv_textarea" name="" ng-model="$parent.currAsk"></textarea>
+        </div>
+
+        <div class="row" ng-if="currAnswer.type === 'checkbox'" ng-repeat="op in options">
+            <!--<label class="checkbox" for="{{op}}">-->
+                <input type="checkbox" ng-model="selection[options.indexOf(op)]" name="group" id="{{op}}" />
+                {{op}}
+            <!--</label>-->
+            <pre ng-bind="selection | json"></pre>    
+        </div>
+
+    </div>
+
+    <div class="submit_button">
+
+        <input type="button" value="Prev" ng-Click="prevPage()" ng-show="!isPrevButtonHide"/>
+        <input type="button" value="Refuse test passing" ng-Click="refuse()" ng-show="isPrevButtonHide"/>
+        <input type="button" value="Next" ng-Click="nextPage()" ng-show="!isNextButtonHide"/>
+        <input type="button" value="Finish" ng-Click="finish()" ng-show="isNextButtonHide"/>
+
+    </div>
+    <!--    Click me: <input type="checkbox" ng-model="checked"><br/>
+        <div>
+            Show:
+            <div class="check-element animate-show" ng-show="checked">
+                <span class="glyphicon glyphicon-thumbs-up"></span> I show up when your checkbox is checked.
+            </div>
+        </div>
+        <div>
+            Hide:
+            <div class="check-element animate-show" ng-hide="checked">
+                <span class="glyphicon glyphicon-thumbs-down"></span> I hide when your checkbox is checked.
+            </div>
+        </div>-->
+</div>
+
+

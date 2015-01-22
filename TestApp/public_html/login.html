@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="Robotics">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.min.css'>
+
+        <link rel="stylesheet" href="css/login/style.css" media="screen" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css" />
+
+    </head>
+
+    <body>
+
+        <div class="head" ng-include="'parts/template/header.html'"></div>
+
+        <div class="container" id="content">
+            <div class="row anim" app-view-segment="0"></div>
+        </div>
+
+        <div class="container" ng-view=""></div>
+
+        <div id=loading class=alert ng-show="loader.show">Loading...</div>
+
+        <!-- JQuery -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="vendor/jquery-ui/ui/jquery-ui.js"></script>
+
+        <!-- Parse -->
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.17.min.js"></script>
+
+        <!-- Angular -->
+        <script type="text/javascript" src="vendor/angular/angular.min.js"></script>
+        <script type="text/javascript" src="vendor/angular/angular-route.min.js"></script>
+        <script type="text/javascript" src="vendor/angular/angular-route-segment.js"></script>
+        <script type="text/javascript" src="vendor/angular/angular-translate.js"></script>
+        <script type="text/javascript" src="vendor/angular/angular-animate.min.js"></script>
+        <script type="text/javascript" src="vendor/route-styles.js"></script>
+        <script type="text/javascript" src="vendor/parse/parse-angular.js"></script>
+        <script src="vendor/angular-route/angular-route.js"></script>
+
+        <!-- Bootstrap project -->
+        <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+        <!-- Tables -->
+        <script type="text/javascript" src="vendor/ng-table.min.js"></script>
+        <script src="vendor/bs-table/bs-table.min.js" type="text/javascript"></script>
+
+        <!-- Angular project -->
+        <script type="text/javascript" src="js/angular/app.js"></script>
+        <script type="text/javascript" src="js/angular/controllers.js"></script>
+        <script type="text/javascript" src="js/angular/surveyControllers.js"></script>
+        <script type="text/javascript" src="js/angular/providers.js"></script>
+        <script type="text/javascript" src="js/angular/services.js"></script>        
+        
+        <script src="js/init.js"></script>
+
+    </body>
+</html>
