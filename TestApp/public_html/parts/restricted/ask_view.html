@@ -12,7 +12,7 @@
 
             <!--</div>-->
         </div>       
-        <div>currently selected: {{currAsk}}</div>
+        <!--<div>currently selected: {{currAsk}}</div>-->
 
         <div class="col-xs-12" ng-if="currAnswer.type === 'textarea'">        
             <textarea class="srv_textarea" name="" ng-model="$parent.currAsk"></textarea>
@@ -23,7 +23,7 @@
                 <input type="checkbox" ng-model="selection[options.indexOf(op)]" name="group" id="{{op}}" />
                 {{op}}
             <!--</label>-->
-            <pre ng-bind="selection | json"></pre>    
+            <!--<pre ng-bind="selection | json"></pre>-->    
         </div>
 
     </div>

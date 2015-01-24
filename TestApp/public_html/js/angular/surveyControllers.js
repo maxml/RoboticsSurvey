@@ -309,8 +309,10 @@ angular.module('Robotics')
                     var num = 0;
                     do {
                         num = Math.floor(Math.random() * answers.length);
-                        res.push(answers[num]);
-                        capacity++;
+                        if (res.indexOf(answers[num]) === -1) {
+                            res.push(answers[num]);
+                            capacity++;
+                        }
                     } while (capacity < last);
                     return res;
                 }
@@ -419,7 +421,6 @@ angular.module('Robotics')
                 }
                 return summ;
             }
-            ;
 
             var init = function () {
                 if (localStorage.getItem("mark") !== null && localStorage.getItem("res") !== undefined) {
