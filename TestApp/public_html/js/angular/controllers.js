@@ -70,6 +70,21 @@ controllerModule.controller('LoginCtrl', ['$scope', '$location', '$route', '$tim
             if (Parse.User.current())
                 return Parse.User.current().get('point');
         };
+        $scope.nick = function () {
+            if ($scope.points()) {
+                if ($scope.points() < 5) {
+                    return 'Dron';
+                }
+                if ($scope.points() < 10) {
+                    return "Продвинутый киборг";
+                }
+                if ($scope.points() < 15) {
+                    return "Терминатор";
+                }
+                return "Кибер-мозг";
+
+            }
+        };
 
     }]);
 
