@@ -36,6 +36,7 @@ app.service('ParseService', function () {
             user.set("username", login);
             user.set("password", password);
             user.set("email", email);
+            user.set("point", 0);
 
             user.signUp(null, {
                 success: function (user) {

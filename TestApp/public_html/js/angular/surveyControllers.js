@@ -9,7 +9,7 @@ angular.module('Robotics')
 
             $scope.getSurveyTextById = function (surveyId) {
                 if ($scope.surveyList.length === 0) {
-                    $scope.selectedSurveyText = "Default text";
+                    $scope.selectedSurveyText = "Вы еще не выбрали ни одного текста!";
                     return;
                 }
                 for (var i = 0; i < $scope.surveyList.length; i++)
@@ -25,7 +25,7 @@ angular.module('Robotics')
             function timeout() {
                 $timeout(function () {
                     $scope.$apply();
-                    console.log('update with timeout fired')
+                    console.log('update with timeout fired');
                 }, 1000);
             }
 

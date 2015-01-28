@@ -73,7 +73,7 @@ controllerModule.controller('LoginCtrl', ['$scope', '$location', '$route', '$tim
         $scope.nick = function () {
             if ($scope.points()) {
                 if ($scope.points() < 5) {
-                    return 'Dron';
+                    return 'Дрон';
                 }
                 if ($scope.points() < 10) {
                     return "Продвинутый киборг";
@@ -84,6 +84,7 @@ controllerModule.controller('LoginCtrl', ['$scope', '$location', '$route', '$tim
                 return "Кибер-мозг";
 
             }
+            return "Бот";
         };
 
     }]);

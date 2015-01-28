@@ -1,17 +1,17 @@
-<h1 style="text-align: center">Survey List</h1>
+<h1 style="text-align: center">Список тестов</h1>
 
 <div style="float: left">
-    <a href="#/home" class="btn btn-success" style="width: 400px; margin-bottom: 20px;">Back</a>
+    <a href="#/home" class="btn btn-success" style="width: 400px; margin-bottom: 20px;">Назад </a>
     <!--    <div class="gridStyle" ng-grid="gridOptions">
         </div>-->
     <table class="table table-hover table-bordered" bs-table>
         <thead>
             <tr>
                 <th ng-click="predicate = 'name';
-                            reverse = !reverse">Title</th>
+                            reverse = !reverse">Название</th>
                 <th ng-click="predicate = 'score';
-                            reverse = !reverse">Score</th>
-                <th>Actions</th>
+                            reverse = !reverse">Очки</th>
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
                 <td width="125px">{{survey.name}}</td>
                 <td>{{survey.score}}</td>
                 <td class="action-column">
-                    <button type="button" class="btn btn-info btn-sm" ng-click="edit(survey)">Edit</button>
+                    <button type="button" class="btn btn-info btn-sm" ng-click="edit(survey)">Выбрать</button>
                 </td>
             </tr>
         </tbody>
@@ -30,6 +30,6 @@
     <p style=" margin: 10px">{{selectedSurveyText}}</p>
     <br>
     <p class="submit_button">
-        <button class="btn btn-default" ng-click="startTest()" style="float: right">Start!</button>
+        <button class="btn btn-default" ng-click="startTest()" style="float: right">Старт!</button>
     </p>
 </div>

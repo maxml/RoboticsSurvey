@@ -7,8 +7,8 @@
                     <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                          alt="">
                     <form class="form-signin">
-                        <input type="text" class="form-control" ng-model="user.username" placeholder="Nickname or email" required autofocus>
-                        <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required>
+                        <input type="text" class="form-control" ng-model="user.username" placeholder="Ник или email" required autofocus>
+                        <input type="password" class="form-control" ng-model="user.password" placeholder="Пароль" required>
                         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="login(user)">
                             ВОЙТИ</button>
                     </form>
@@ -19,9 +19,9 @@
                     <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                          alt="">
                     <form class="form-signin">
-                        <input type="text" class="form-control" ng-model="user.login" placeholder="Username" required autofocus>
+                        <input type="text" class="form-control" ng-model="user.login" placeholder="Ник" required autofocus>
                         <input type="email" class="form-control" ng-model="user.email" placeholder="Email" required>
-                        <input type="password" class="form-control" ng-model="user.password" placeholder="Password" required>
+                        <input type="password" class="form-control" ng-model="user.password" placeholder="Пароль" required>
                         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="register(user)">
                             ЗАРЕГИСТРИРОВАТЬСЯ</button>
                     </form>
@@ -68,27 +68,27 @@
                                         <td><a ng-href="mailto: {{email()}}">{{email()}}</a></td>
                                     </tr>
                                     <tr>
-                                        <td>Email is verified:</td>
+                                        <td>Email проверен:</td>
                                         <td>{{emailVerified()}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Create date:</td>
+                                        <td>Дата создания:</td>
                                         <td>{{createdAt()}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Points:</td>
+                                        <td>Очки:</td>
                                         <td>{{points()}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Nick:</td>
+                                        <td>Никы:</td>
                                         <td>{{nick()}}</td>
                                     </tr>
                                     
 
                                 </tbody>
                             </table>
-                            <a href="#" class="btn btn-primary" ng-click="logout()">Logout</a>
-                            <a href="#" class="btn btn-primary" ng-click="goInside()">Go to portal</a>
+                            <a href="#" class="btn btn-primary" ng-click="logout()">Выйти</a>
+                            <a href="#" class="btn btn-primary" ng-click="goInside()">Зайти на портал</a>
                         </div>
                     </div>
                 </div>
